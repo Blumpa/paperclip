@@ -150,7 +150,7 @@ module Paperclip
             Proc.new do |style, attachment|
               permission  = (@s3_permissions[style.to_s.to_sym] || @s3_permissions[:default])
               permission  = permission.call(attachment, style) if permission.respond_to?(:call)
-              (permission == DEFAULT_PERMISSION) ? 'http' : 'https'
+              (permission == :'public-read') ? 'http' : 'https'
             end
           @s3_metadata = @options[:s3_metadata] || {}
           @s3_headers = {}
@@ -318,7 +318,7 @@ module Paperclip
 
       def set_permissions permissions
         permissions = { :default => permissions } unless permissions.respond_to?(:merge)
-        permissions.merge :default => (permissions[:default] || DEFAULT_PERMISSION)
+        permissions.merge :default => (permissions[:default] || :'public-read')
       end
 
       def set_storage_class(storage_class)
