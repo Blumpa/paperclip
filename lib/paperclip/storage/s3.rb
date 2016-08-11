@@ -117,11 +117,8 @@ module Paperclip
           begin
             require 'aws-sdk'
             const_set('AWS_CLASS', defined?(::Aws) ? ::Aws : ::AWS)
-            const_set('AWS_BASE_ERROR',
-              defined?(::Aws) ? Aws::Errors::ServiceError : AWS::Errors::Base)
-            const_set('DEFAULT_PERMISSION',
-              defined?(::AWS) ? :public_read : :'public-read')
-
+            const_set('AWS_BASE_ERROR', defined?(::Aws) ? Aws::Errors::ServiceError : AWS::Errors::Base)
+            const_set('DEFAULT_PERMISSION', :'public-read')
           rescue LoadError => e
             e.message << " (You may need to install the aws-sdk gem)"
             raise e
